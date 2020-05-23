@@ -7,7 +7,16 @@
     "Uploaddir"     : "/var/www/mlm/www/product",
     "Pubrole"       : "p",
     "Secret"   : "biotiquin_random_SAMPLE1234",
-    "Custom"   : {"SHOP_typeid":100, "TOP_memberid":1, "BIN":{"unit":200, "rate":0.1, "rate21":0.15}, "RATE_shop":0.1, "RATE_affiliate":0.02, "RATE_matchdown":0.25, "MAX_plevel":3, "MAX_slevel":3, "MAX_mplevel":3, "MAX_mslevel":3, "ENTER":"/m/en/member?action=edit"},
+    "Custom"   : {
+      "StripeAPIPubKey": "pk_test_6vEARoaKyS3ioTt2hsCKACg800yuPpLo6s",
+      "StripeAPISecret": "*********************",
+      "SHOP_typeid":100, "TOP_memberid":1,
+      "BIN":
+      {
+        "unit":200, "rate":0.1, "rate21":0.15
+      },
+      "RATE_shop":0.1, "RATE_affiliate":0.02, "RATE_matchdown":0.25, "MAX_plevel":3, "MAX_slevel":3, "MAX_mplevel":3, "MAX_mslevel":3, "ENTER":"/m/en/member?action=edit"
+    },
     "Chartags" : {
         "html" : {"Content_type":"text/html; charset='UTF-8'", "Short":"html"},
         "en"   : {"Content_type":"text/html; charset='UTF-8'", "Short":"html"},

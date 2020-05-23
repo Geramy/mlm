@@ -2,6 +2,7 @@ package MLM::Sale::Model;
 
 use strict;
 use MLM::Model;
+use Net::Stripe;
 use vars qw($AUTOLOAD @ISA);
 
 @ISA=('MLM::Model');
@@ -26,7 +27,7 @@ JOIN sale_basket b ON i.basketid = b.basketid
 join product_gallery g on b.id = g.galleryid
 where b.classify = 'gallery' AND s.saleid=?", $ARGS->{saleid}, $ARGS->{saleid});
 }
-  
+
 sub buy {
   my $self = shift;
   my $ARGS = $self->{ARGS};
@@ -40,15 +41,23 @@ sub buy {
   my $have = $ledger->{balance} + $ledger->{shop_balance};
   my $d1 = 0;
   my $d2 = 0;
-  if ($have<$need) {
-	return 3201;
-  } elsif ($ledger->{shop_balance}<$need) {
-    return 3202 unless ($ARGS->{agreebalance} eq 'Yes');
-    $d1 = $ledger->{shop_balance};
-    $d2 = $need - $d1;
-  } else {
-    $d1 = $need;
+
+  if($ARGS{method}) {
+    if($ARGS->{method} == "debt") {
+      return 3202;
+      #Make purchase of $need on debt card.
+    }
   }
+
+  #if ($have<$need) {
+	#return 3201;
+  #} elsif ($ledger->{shop_balance}<$need) {
+  #  return 3202 unless ($ARGS->{agreebalance} eq 'Yes');
+  #  $d1 = $ledger->{shop_balance};
+  #  $d2 = $need - $d1;
+  #} else {
+  #  $d1 = $need;
+  #}
 
   $err = $self->do_sql(
 "INSERT INTO sale (memberid, amount, credit, shipping, paytype, paystatus, typeid, active, created)
