@@ -7,7 +7,6 @@
     <meta name="author" content="">
 
     <title>Genelet MLM Portal</title>
-    <script src="https://js.stripe.com/v3/"></script>
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
