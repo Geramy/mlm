@@ -47,25 +47,86 @@
 </div>
 
 <script>
-var stripe = Stripe('pk_test_6vEARoaKyS3ioTt2hsCKACg800yuPpLo6s');
-var elements = stripe.elements();
+(function() {
+  "use strict";
 
-var style = {
-  base: {
-    color: "#32325d",
-  }
-};
+  var elements = stripe.elements({
+    // Stripe's examples are localized to specific languages, but if
+    // you wish to have Elements automatically detect your user's locale,
+    // use `locale: 'auto'` instead.
+    locale: window.__exampleLocale
+  });
 
-var card = elements.create("card", { style: style });
-card.mount("#card-element");
-$("#card-element").on('change', function(event) {
-  var displayError = document.getElementById('card-errors');
-  if (event.error) {
-    displayError.textContent = event.error.message;
-  } else {
-    displayError.textContent = '';
-  }
-});
+  /**
+   * Card Element
+   */
+  var card = elements.create("card", {
+    iconStyle: "solid",
+    style: {
+      base: {
+        iconColor: "#fff",
+        color: "#fff",
+        fontWeight: 400,
+        fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+
+        "::placeholder": {
+          color: "#BFAEF6"
+        },
+        ":-webkit-autofill": {
+          color: "#fce883"
+        }
+      },
+      invalid: {
+        iconColor: "#FFC7EE",
+        color: "#FFC7EE"
+      }
+    }
+  });
+  card.mount("#card-element");
+
+  /**
+   * Payment Request Element
+   */
+  var paymentRequest = stripe.paymentRequest({
+    country: "MX",
+    currency: "mxn",
+    total: {
+      amount: [% need %],
+      label: "Total"
+    },
+    requestShipping: false,
+  });
+  paymentRequest.on("token", function(result) {
+    var example = document.querySelector(".example5");
+    example.querySelector(".token").innerText = result.token.id;
+    example.classList.add("submitted");
+    result.complete("success");
+  });
+
+  var paymentRequestElement = elements.create("paymentRequestButton", {
+    paymentRequest: paymentRequest,
+    style: {
+      paymentRequestButton: {
+        theme: "light"
+      }
+    }
+  });
+
+  paymentRequest.canMakePayment().then(function(result) {
+    if (result) {
+      document.querySelector(".example5 .card-only").style.display = "none";
+      document.querySelector(
+        ".example5 .payment-request-available"
+      ).style.display =
+        "block";
+      paymentRequestElement.mount("#example5-paymentRequest");
+    }
+  });
+
+  registerElements([card], "example5");
+})();
 </script>
 
 [% ELSE %]

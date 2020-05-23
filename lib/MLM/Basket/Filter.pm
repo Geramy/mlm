@@ -34,7 +34,12 @@ sub before {
 	my $r      = $self->{R};
 	my $who    = $ARGS->{g_role};
 	my $action = $ARGS->{g_action};
-
+	if($self->{CUSTOM}->{StripeAPIPubKey}) {
+		$ARGS->{StripeAPIPubKey} = $self->{CUSTOM}->{StripeAPIPubKey};
+	}
+	if($self->{CUSTOM}->{StripeAPISecret}) {
+		$ARGS->{StripeAPISecret} = $self->{CUSTOM}->{StripeAPISecret};
+	}
 	my ($form, $extra, $nextextras) = @_;
 
 	return;
