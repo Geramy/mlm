@@ -97,7 +97,7 @@
       // Submit the form
       form.submit();
     }
-})(jQuery);
+})();
 </script>
 
 [% ELSE %]
