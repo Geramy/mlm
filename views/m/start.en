@@ -7,7 +7,7 @@
     <meta name="author" content="">
 
     <title>Genelet MLM Portal</title>
-
+    <script src="https://js.stripe.com/v3/"></script>
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -22,22 +22,22 @@
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
            <a class="nav-link" href="category?action=topics">Store</a>
-        </li>  
+        </li>
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
            <a class="nav-link" href="basket"><span data-feather="shopping-cart"></span></a>
-        </li>  
+        </li>
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
            <a class="nav-link" href="member?action=edit">[% m_name %] [% m_lastname %]</a>
-        </li>  
+        </li>
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
            <a class="nav-link" href="logout">Sign out</a>
-        </li>  
+        </li>
       </ul>
     </nav>
 

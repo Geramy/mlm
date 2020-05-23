@@ -27,19 +27,42 @@
 [% END %]<tr><td colspan=6 align=right>$[% amount %]</td></tr>
 </tbody>
 </table>
-
 [% SET need = amount + shipping %]
 [% SET shop = ledger_currentBalance.0.shop_balance %]
 [% SET balance = ledger_currentBalance.0.balance %]
 [% SET have = shop+balance %]
-<form class="form" method=post action="sale"><input type=hidden name="action" value="buy">
-<p>
-The total payment is $[% need %]. You have $[% have %] in your account, among which the shopping balance is $[% shop %] and the cash balance $[% balance %].
-</p>
-[% IF have < need %]You don't have enough money to pay for the products, please deposit or remove some items.
-[% END %]
+<form id="payment-form">
+  <div id="card-element">
+    <!-- Elements will create input elements here -->
+  </div>
+
+  <!-- We'll put the error messages in this element -->
+  <div id="card-errors" role="alert"></div>
+
+  <button id="submit">Pay</button>
 </form>
 
+<script>
+var stripe = Stripe('pk_test_6vEARoaKyS3ioTt2hsCKACg800yuPpLo6s');
+var elements = stripe.elements();
+
+var style = {
+  base: {
+    color: "#32325d",
+  }
+};
+
+var card = elements.create("card", { style: style });
+card.mount("#card-element");
+$("#card-element").on('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+</script>
 
 [% ELSE %]
 <h4>Empty</h4>

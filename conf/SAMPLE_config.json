@@ -29,7 +29,7 @@
         "maxlevel": "info"
     },
 
-    "Db" : ["dbi:mysql:mlm:127.0.0.1:3306", "root", "D21By23!"],
+    "Db" : ["dbi:mysql:mlm:127.0.0.1:3306", "root", "******"],
 
     "Roles" : {
         "m": {
@@ -80,7 +80,7 @@
 		"3001" : "wrong privilege",
 		"3002" : "wrong admin",
 		"3003" : "wrong login name format",
-		
+
         "3005" : "Wrong starting or ending time.",
         "3006" : "Empty searching string.",
 
