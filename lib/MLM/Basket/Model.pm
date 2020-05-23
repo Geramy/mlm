@@ -24,7 +24,12 @@ SELECT basketid, classify, id, title, logo, price, sh, bv, qty,
 FROM sale_basket b
 INNER JOIN product_package g ON (b.id=g.packageid AND b.classify='package')
 WHERE memberid=? AND inbasket='Yes'", $ARGS->{memberid}, $ARGS->{memberid});
-
+  if($self->{CUSTOM}->{StripeAPIPubKey}) {
+    $ARGS->{StripeAPIPubKey} = $self->{CUSTOM}->{StripeAPIPubKey};
+  }
+  if($self->{CUSTOM}->{StripeAPISecret}) {
+    $ARGS->{StripeAPISecret} = $self->{CUSTOM}->{StripeAPISecret};
+  }
 	$ARGS->{amount} = 0;
 	$ARGS->{credit} = 0;
 	$ARGS->{shipping} = 0;

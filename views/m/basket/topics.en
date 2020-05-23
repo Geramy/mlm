@@ -49,7 +49,7 @@
 <script>
 (function() {
   "use strict";
-
+  var stripe = Stripe('[% StripeAPIPubKey %]');
   var elements = stripe.elements({
     // Stripe's examples are localized to specific languages, but if
     // you wish to have Elements automatically detect your user's locale,

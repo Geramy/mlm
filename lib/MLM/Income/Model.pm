@@ -50,17 +50,17 @@ ORDER BY c1_id");
     $ARGS->{end_daily} = $item->{end_daily};
     if ($item->{c4_id} && $item->{status} eq 'No') {
       $ARGS->{c4_id} = $item->{c4_id}-1;
-      $ARGS->{to_run_direct} = 1;  
+      $ARGS->{to_run_direct} = 1;
     }
     $ARGS->{c1_id} = $item->{c1_id}-1;
     if ($item->{statusBinary} eq 'No') {
-      $ARGS->{to_run_binary} = 1;  
+      $ARGS->{to_run_binary} = 1;
     }
     if ($item->{statusUp} eq 'No') {
       $ARGS->{to_run_match} = 1;
     }
     if ($item->{statusAffiliate} eq 'No') {
-      $ARGS->{to_run_affiliate} = 1;  
+      $ARGS->{to_run_affiliate} = 1;
     }
     return $self->run_cron();
   }
@@ -150,7 +150,7 @@ WHERE m.active='Yes'
 AND (DATE(m.signuptime) BETWEEN ? AND ?)
 GROUP BY s.memberid, t.typeid", $ARGS->{start_daily}, $ARGS->{end_daily});
 }
- 
+
 sub done_week1_affiliate {
   my $self = shift;
   return $self->do_sql(
@@ -228,10 +228,10 @@ amount  =>$amount,
 refid   =>$refid,
 lev     =>$lev
     }
-  } 
+  }
   return;
 }
- 
+
 sub done_week1_binary {
   my $self = shift;
   return $self->do_sql(
@@ -261,7 +261,7 @@ FROM (
 "UPDATE income SET paystatus='paid'
 WHERE paystatus='new' AND classify='binary'
 AND weekid=?", $self->{ARGS}->{c1_id}) || $self->do_sql(
-"UPDATE member m 
+"UPDATE member m
 INNER JOIN income i USING (memberid)
 SET m.miler=m.miler-IF(i.lev=12, 2*i.amount*$unit, i.amount*$unit),
     m.milel=m.milel-IF(i.lev=21, 2*i.amount*$unit, i.amount*$unit)
@@ -288,7 +288,7 @@ sub week1_match {
 "SELECT typeid, lev, rate FROM def_match");
   return $err if $err;
   for my $item (@$tmp) {
-    $ref_match->{$item->{typeid}}->{$item->{lev}} = $item->{rate}; 
+    $ref_match->{$item->{typeid}}->{$item->{lev}} = $item->{rate};
     $ARGS->{MAX} = $item->{lev} if ($ARGS->{MAX} < $item->{lev});
   }
 
@@ -312,7 +312,7 @@ AND m.active='Yes'", $ARGS->{start_daily}, $ARGS->{end_daily}) and return $err;
 
   my $counts = {};
   for my $item (@$tmp) {
-    my $childid = $item->{memberid}; 
+    my $childid = $item->{memberid};
     for (my $i=1; $i<=$ARGS->{MAX}; $i++) {
       my $ref = $parent->{$childid};
       last unless $ref;
@@ -337,12 +337,12 @@ refid   =>$typeid,
 lev     =>$level,
 amount  =>$counts->{$sid}->{$typeid}->{$level}};
       }
-    } 
-  } 
+    }
+  }
 
   return;
 }
- 
+
 sub done_week1_match {
   my $self = shift;
   return $self->do_sql(
