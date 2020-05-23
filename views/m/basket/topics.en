@@ -31,7 +31,7 @@
 [% SET shop = ledger_currentBalance.0.shop_balance %]
 [% SET balance = ledger_currentBalance.0.balance %]
 [% SET have = shop+balance %]
-<div class="col-6">
+<div class="cell example example5" id="example-5">
   <form id="payment-form" action="sale" method="post">
     <input type=hidden name="action" value="buy">
     <input type=hidden name="method" value="debt">
