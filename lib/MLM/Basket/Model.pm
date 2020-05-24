@@ -13,17 +13,19 @@ sub topics {
 
 	$self->{LISTS} = [];
 	my $err = $self->select_sql($self->{LISTS},
-"SELECT basketid, classify, id, title, logo, price, sh, bv, qty,
-	(qty*price) AS amount, (qty*bv) AS credit, (qty*sh) AS shipping
+"SELECT basketid, classify, id, title, logo, (price - ((price / 100) * t.product_discount)), sh, bv, qty,
+	(qty*(price - ((price / 100) * t.product_discount))) AS amount, (qty*bv) AS credit, (qty*sh) AS shipping, (price - ((price / 100) * t.product_discount)) as discount_price
 FROM sale_basket b
 INNER JOIN product_gallery g ON (b.id=g.galleryid AND b.classify='gallery')
+INNER JOIN member m ON m.memberid = ?
+INNER JOIN def_type t ON t.typeid = m.typeid
 WHERE memberid=? AND inbasket='Yes'
 UNION
-SELECT basketid, classify, id, title, logo, price, sh, bv, qty,
-	(qty*price) AS amount, (qty*bv) AS credit, (qty*sh) AS shipping
+SELECT basketid, classify, id, title, logo, (price - ((price / 100) * t.product_discount)), sh, bv, qty,
+	(qty*(price - ((price / 100) * t.product_discount))) AS amount, (qty*bv) AS credit, (qty*sh) AS shipping
 FROM sale_basket b
 INNER JOIN product_package g ON (b.id=g.packageid AND b.classify='package')
-WHERE memberid=? AND inbasket='Yes'", $ARGS->{memberid}, $ARGS->{memberid});
+WHERE memberid=? AND inbasket='Yes'",  $ARGS->{memberid}, $ARGS->{memberid}, $ARGS->{memberid});
   if($self->{CUSTOM}->{StripeAPIPubKey}) {
     $ARGS->{StripeAPIPubKey} = $self->{CUSTOM}->{StripeAPIPubKey};
   }
