@@ -26,7 +26,7 @@ INNER JOIN member m ON m.memberid = ?
 LEFT JOIN def_type t ON t.typeid = m.typeid
 WHERE pg.galleryid=?", $self->{ARGS}->{memberid}, $self->{ARGS}->{galleryid});
   return $err if $err;
-  $self->{ARGS}->{discount_price} = $self->{ARGS}->{price} / 100 * $self->{ARGS}->{pd} + $self->{ARGS}->{price};
+  $self->{ARGS}->{discount_price} = $self->{ARGS}->{price} / 100 * $self->{ARGS}->{pd} - $self->{ARGS}->{price};
   return $self->SUPER::edit(@_);
 }
 
