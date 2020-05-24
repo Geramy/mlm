@@ -17,6 +17,15 @@ WHERE galleryid=?", $self->{ARGS}->{galleryid});
   return $self->SUPER::delete(@_);
 }
 
+sub edit {
+  my $self = shift;
+  my $err = $self->get_args($self->{ARGS},
+"SELECT price, bv, description, created, title, full, categoryid, logo, galleryid, status, sh
+FROM product_gallery
+WHERE galleryid=?", $self->{ARGS}->{galleryid});
+  return $err if $err;
+}
+
 sub update {
   my $self = shift;
   my $err = $self->get_args($self->{ARGS},
