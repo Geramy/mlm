@@ -44,7 +44,7 @@ sub buy {
   my $transaction;
 
   if($ARGS->{stripeToken}) {
-    my $stripe = Net::Stripe->new(api_key => $ARGS->{StripeAPIPubKey});
+    my $stripe = Net::Stripe->new(api_key => $ARGS->{StripeAPISecret});
     my $card_token = $ARGS->{stripeToken};
     if($ARGS->{method} == "debt") {
       my $charge = $stripe->post_charge(  # Net::Stripe::Charge
