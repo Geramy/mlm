@@ -68,7 +68,7 @@ sub buy {
   #} else {
   #  $d1 = $need;
   #}
-  return 3204 unless $transaction
+  return 3204 unless $transaction;
   $err = $self->do_sql(
 "INSERT INTO sale (memberid, amount, credit, shipping, paytype, paystatus, typeid, active, created, billingid)
 VALUES (?, ?, ?, ?, 'Advanced', 'Processing', ".$ARGS->{shop_typeid}.", 'Yes', NOW(), '".$transaction->id."')", map {$ARGS->{$_}} (qw(memberid amount credit shipping)));

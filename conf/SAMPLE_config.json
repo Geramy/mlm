@@ -107,6 +107,7 @@
 
 		"3201" : "Not enough money to pay.",
 		"3202" : "Not enough money in shop balance. Please allow to use reward.",
-    "3203" : "Charge was not paid, error processing transaction, Try again later."
+    "3203" : "Charge was not paid, error processing transaction due to card issuer.",
+    "3204" : "Transaction error."
     }
 }
