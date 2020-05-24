@@ -17,9 +17,6 @@
 			}
 		}
 	},
-	"fks" : {
-        "m" : ["memberid",false]
-    },
 	"nextpages":{
 		"edit":[
 			{"model":"category", "action":"topics"}
