@@ -33,8 +33,6 @@
 [% SET have = shop+balance %]
 <div class="form-group col-md-5" id="example-5">
   <form id="payment-form" action="sale" method="post">
-    <input type=hidden name="action" value="buy">
-    <input type=hidden name="method" value="debt">
     <label for="card-element">
       Credit or debit card
     </label>
@@ -44,6 +42,8 @@
     <!-- Used to display Element errors. -->
     <div id="card-errors" role="alert"></div>
     <button>Submit Payment</button>
+    <input type=hidden name="action" value="buy">
+    <input type=hidden name="method" value="debt">
   </form>
 </div>
 
