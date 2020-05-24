@@ -40,6 +40,13 @@ sub before {
 	my $who    = $ARGS->{g_role};
 	my $action = $ARGS->{g_action};
 
+  if($self->{CUSTOM}->{StripeAPIPubKey}) {
+    $ARGS->{StripeAPIPubKey} = $self->{CUSTOM}->{StripeAPIPubKey};
+  }
+  if($self->{CUSTOM}->{StripeAPISecret}) {
+    $ARGS->{StripeAPISecret} = $self->{CUSTOM}->{StripeAPISecret};
+  }
+
 	if ($action eq 'topics') {
 		$extra->{paytype} = $ARGS->{paytype} if $ARGS->{paytype};
 		$extra->{paystatus} = $ARGS->{paystatus} if $ARGS->{paystatus};
