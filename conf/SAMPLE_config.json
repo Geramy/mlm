@@ -106,6 +106,7 @@
         "3124" : "Password must be 6-letter long.",
 
 		"3201" : "Not enough money to pay.",
-		"3202" : "Not enough money in shop balance. Please allow to use reward."
+		"3202" : "Not enough money in shop balance. Please allow to use reward.",
+    "3203" : "Charge was not paid, error processing transaction, Try again later."
     }
 }
