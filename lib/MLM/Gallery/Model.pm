@@ -20,7 +20,7 @@ WHERE galleryid=?", $self->{ARGS}->{galleryid});
 sub edit {
   my $self = shift;
   my $err = $self->get_args($self->{ARGS},
-"SELECT pg.price, _discount AS 'pd'
+"SELECT pg.price, product_discount AS 'pd'
 FROM product_gallery pg
 INNER JOIN member m ON m.memberid = ?
 LEFT JOIN def_type t ON t.typeid = m.typeid
