@@ -61,7 +61,7 @@ sub buy {
   return 3204 unless $transaction;
   $err = $self->do_sql(
 "INSERT INTO sale (memberid, amount, credit, shipping, paytype, paystatus, typeid, active, created, billingid)
-VALUES (?, ?, ?, ?, 'Advanced', 'Success', ".$ARGS->{shop_typeid}.", 'Yes', NOW(), '".$transaction->id."')", map {$ARGS->{$_}} (qw(memberid amount credit shipping)));
+VALUES (?, ?, ?, ?, 'CC', 'Processing', ".$ARGS->{shop_typeid}.", 'Yes', NOW(), '".$transaction->id."')", map {$ARGS->{$_}} (qw(memberid amount credit shipping)));
   return $err if $err;
 
   my $saleid = $self->last_insertid();
