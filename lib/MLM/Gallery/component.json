@@ -32,5 +32,5 @@
 	"insert_pars"     :["price","bv","description","created","title","full","categoryid","logo",            "status","sh"],
 	"update_pars"     :["price","bv","description","created","title","full","categoryid","logo","galleryid","status","sh"],
 	"topics_pars"     :["price","bv","description","created","title","full","categoryid","logo","galleryid","status","sh"],
-	"edit_pars"       :["price","bv","description","created","title","full","categoryid","logo","galleryid","status","sh"],
+	"edit_pars"       :["price","bv","description","created","title","full","categoryid","logo","galleryid","status","sh"]
 }
