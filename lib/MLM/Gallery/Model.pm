@@ -20,11 +20,11 @@ WHERE galleryid=?", $self->{ARGS}->{galleryid});
 sub edit {
   my $self = shift;
   my $err = $self->get_args($self->{ARGS},
-"SELECT price, t.product_discount AS 'pd'
-FROM product_gallery
+"SELECT pg.price, t.product_discount AS 'pd'
+FROM product_gallery pg
 INNER JOIN member m ON m.memberid = ?
 LEFT JOIN def_type t ON t.typeid = m.typeid
-WHERE galleryid=?", $self->{ARGS}->{memberid}, $self->{ARGS}->{galleryid});
+WHERE pg.galleryid=?", $self->{ARGS}->{memberid}, $self->{ARGS}->{galleryid});
   return $err if $err;
   $self->{ARGS}->{discount_price} = $self->{ARGS}->{price} / 100 * $self->{ARGS}->{pd} + $self->{ARGS}->{price};
   return $self->SUPER::edit(@_);
