@@ -48,26 +48,16 @@ sub buy {
     my $card_token = $ARGS->{stripeToken};
     if($ARGS->{method} == "debt") {
       my $charge = $stripe->post_charge(  # Net::Stripe::Charge
-        amount      => $total_costs,
+        amount      => $total_costs*100, #You must pass two 00 as the previous zero's are for cents and not dollars
         currency    => 'mxn',
         source      => $card_token,
-        description => 'T3Dist-' . $ARGS->{saleid},
+        description => 'T3Dist-' . $ARGS->{memberid},
       );
       return 3203 unless $charge->paid;
       $transaction = $stripe->get_charge(charge_id => $charge->id);
       #Make purchase of $need on debt card.
     }
   }
-
-  #if ($have<$need) {
-	#return 3201;
-  #} elsif ($ledger->{shop_balance}<$need) {
-  #  return 3202 unless ($ARGS->{agreebalance} eq 'Yes');
-  #  $d1 = $ledger->{shop_balance};
-  #  $d2 = $need - $d1;
-  #} else {
-  #  $d1 = $need;
-  #}
   return 3204 unless $transaction;
   $err = $self->do_sql(
 "INSERT INTO sale (memberid, amount, credit, shipping, paytype, paystatus, typeid, active, created, billingid)
@@ -86,7 +76,7 @@ VALUES (?, ?, ?, ?, 'Advanced', 'Success', ".$ARGS->{shop_typeid}.", 'Yes', NOW(
   $err = $self->do_sql($str1) || $self->do_sql($str2) || $self->do_sql(
 "INSERT INTO income_ledger (memberid, amount, balance, shop_balance, old_ledgerid, weekid, created, status)
 VALUES (?,?,?,?,?,?,NOW(),'Shopping')",
-$ARGS->{memberid}, -1*$total_costs, $ledger->{balance}-$d2, $ledger->{shop_balance}-$d1, $ledger->{ledgerid}, $ledger->{weekid});
+$ARGS->{memberid}, -1*$total_costs, 0, 0, $ledger->{ledgerid}, $ledger->{weekid});
 }
 
 1;
