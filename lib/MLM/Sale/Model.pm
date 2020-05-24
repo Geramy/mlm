@@ -36,7 +36,7 @@ sub buy {
   my $err = $self->call_once({model=>"basket", action=>"topics"});
   return $err if $err;
 
-  my $need = $ARGS->{amount} + $ARGS->{shipping};
+  my $total_costs = $ARGS->{amount} + $ARGS->{shipping};
   my $ledger = $self->{OTHER}->{ledger_currentBalance}->[0];
   my $have = $ledger->{balance} + $ledger->{shop_balance};
   my $d1 = 0;
@@ -48,7 +48,7 @@ sub buy {
     my $card_token = $ARGS->{stripeToken};
     if($ARGS->{method} == "debt") {
       my $charge = $stripe->post_charge(  # Net::Stripe::Charge
-        amount      => $need,
+        amount      => $total_costs,
         currency    => 'mxn',
         source      => $card_token,
         description => 'T3Dist-' . $ARGS->{saleid},
@@ -71,7 +71,7 @@ sub buy {
   return 3204 unless $transaction;
   $err = $self->do_sql(
 "INSERT INTO sale (memberid, amount, credit, shipping, paytype, paystatus, typeid, active, created, billingid)
-VALUES (?, ?, ?, ?, 'Advanced', 'Processing', ".$ARGS->{shop_typeid}.", 'Yes', NOW(), '".$transaction->id."')", map {$ARGS->{$_}} (qw(memberid amount credit shipping)));
+VALUES (?, ?, ?, ?, 'Advanced', 'Success', ".$ARGS->{shop_typeid}.", 'Yes', NOW(), '".$transaction->id."')", map {$ARGS->{$_}} (qw(memberid amount credit shipping)));
   return $err if $err;
 
   my $saleid = $self->last_insertid();
@@ -86,7 +86,7 @@ VALUES (?, ?, ?, ?, 'Advanced', 'Processing', ".$ARGS->{shop_typeid}.", 'Yes', N
   $err = $self->do_sql($str1) || $self->do_sql($str2) || $self->do_sql(
 "INSERT INTO income_ledger (memberid, amount, balance, shop_balance, old_ledgerid, weekid, created, status)
 VALUES (?,?,?,?,?,?,NOW(),'Shopping')",
-$ARGS->{memberid}, -1*$need, $ledger->{balance}-$d2, $ledger->{shop_balance}-$d1, $ledger->{ledgerid}, $ledger->{weekid});
+$ARGS->{memberid}, -1*$total_costs, $ledger->{balance}-$d2, $ledger->{shop_balance}-$d1, $ledger->{ledgerid}, $ledger->{weekid});
 }
 
 1;
