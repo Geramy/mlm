@@ -10,7 +10,7 @@
 </div>
 <div class=row>
 	<div class="col-12">
-Price: $[% item.price %]
+Price: $[% discount_price %]
 BV: $[% item.bv %]
 	</div>
 	<div class="col-12">
