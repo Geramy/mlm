@@ -42,7 +42,7 @@ sub buy {
   my $d1 = 0;
   my $d2 = 0;
 
-  if($ARGS{method}) {
+  if($ARGS->{method}) {
     if($ARGS->{method} == "debt") {
       return 3202;
       #Make purchase of $need on debt card.
